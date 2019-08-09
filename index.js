@@ -1,22 +1,26 @@
-const express = require('express')
-const Sse = require('json-sse')
-const bodyParser = require('body-parser')
+const express = require("express");
+const Sse = require("json-sse");
+const bodyParser = require("body-parser");
 
-const data = 'hello world'
-const sse = new Sse(data)
+const messages = ["hello world"];
+const sse = new Sse(messages);
 
-const app = express()
+const app = express();
 
-const parserMiddleware = bodyParser.json()
-app.use(parserMiddleware)
+const parserMiddleware = bodyParser.json();
+app.use(parserMiddleware);
 
-app.get('/stream', sse.init)
-app.post('/message', (request, response) => {
-  const { message } = request.body
-  sse.send(message)
-  response.send(message)
-})
+app.get("/stream", sse.init);
+app.post("/message", (request, response) => {
+  const { message } = request.body;
+  messages.push(message);
 
-const port = process.env.PORT || 5000
+  sse.updateInit(messages);
+  sse.send(message);
+  
+  response.send(message);
+});
 
-app.listen(port, () => console.log(`Listening on :${port}`))
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log(`Listening on :${port}`));
