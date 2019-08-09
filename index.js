@@ -17,7 +17,8 @@ db
 
 const Message = db.define(
   "message", {
-  text: Sequelize.STRING
+    text: Sequelize.STRING,
+    user: Sequelize.STRING
 });
 
 const sse = new Sse();
@@ -42,9 +43,9 @@ app.get("/stream", async (request, response) => {
 app.post(
   "/message", 
   async (request, response) => {
-  const { message } = request.body;
+  const { message, user } = request.body;
 
-  const entity = await Message.create({ text: message });
+  const entity = await Message.create({ text: message, user });
 
   const messages = await Message.findAll();
 
