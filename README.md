@@ -2,6 +2,8 @@
 
 #### The front-end for this project [chat-client](https://github.com/nataliaev/chat-client)
 
+#### You can try it at [stream-chat](https://stream-chat.netlify.com)
+
 ## Technologies used
 
 -   [Node.js](https://www.nodejs.org)
